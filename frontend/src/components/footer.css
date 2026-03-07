@@ -1,0 +1,22 @@
+.app-footer {
+  background: #f8f9fa;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #6c757d;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  box-shadow: 0 -1px 3px rgba(0,0,0,0.05);
+}
+
+/* ensure content isn't hidden behind the fixed footer */
+body {
+  padding-bottom: 56px;
+}
+
+.footer-container {
+  max-width: 1120px;
+  margin: 0 auto;
+}

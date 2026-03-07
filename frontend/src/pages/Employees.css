@@ -1,0 +1,73 @@
+/* Page Title */
+
+.employee-title{
+  font-weight:700;
+  letter-spacing:1px;
+  transition:0.3s;
+}
+
+.employee-title:hover{
+  color:#0d6efd;
+  transform:scale(1.05);
+}
+
+
+/* Search Box */
+
+.search-box{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  max-width:500px;
+  margin:auto;
+}
+
+.search-input{
+  border-radius:30px;
+  padding:12px 20px;
+  transition:0.3s;
+}
+
+.search-input:focus{
+  box-shadow:0 0 10px rgba(13,110,253,0.4);
+  border-color:#0d6efd;
+}
+
+.search-btn{
+  border-radius:30px;
+  padding:10px 20px;
+}
+
+
+/* Employee Cards */
+
+.employee-card{
+  background:white;
+  border-radius:10px;
+  padding:15px;
+  transition:0.3s;
+  cursor:pointer;
+  border:1px solid #eee;
+}
+
+/* Hover Effect */
+
+.employee-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 12px 25px rgba(0,0,0,0.15);
+}
+
+
+/* Responsive */
+
+@media (max-width:768px){
+
+  .search-box{
+    flex-direction:column;
+  }
+
+  .search-btn{
+    width:100%;
+  }
+
+}
