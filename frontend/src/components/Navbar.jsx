@@ -18,9 +18,19 @@
 // };
 
 // export default Navbar;
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
 
@@ -67,6 +77,14 @@ const Navbar = () => {
               <i className="bi bi-info-circle me-1"></i> About
             </Link>
           </li>
+
+          {user && (
+            <li className="nav-item">
+              <button className="nav-link btn btn-link" onClick={handleLogout} style={{textDecoration:'none'}}>
+                <i className="bi bi-box-arrow-right me-1"></i> Log Out
+              </button>
+            </li>
+          )}
 
         </ul>
       </div>
