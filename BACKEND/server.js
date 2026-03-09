@@ -3,37 +3,37 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db1");
 
-// load environment variables
 dotenv.config();
 
-// connect to MongoDB
 connectDB();
 
-// initialize express app
 const app = express();
 
-// middleware
+// CORS configuration
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true,
-  }),
+    origin: [
+      "http://localhost:5173",
+      "https://employee-directory-ten-liard.vercel.app"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+  })
 );
+
+// middleware
 app.use(express.json());
 
 // routes
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/employees", require("./routes/employeeRoutes"));
 
-// test route (optional but useful)
 app.get("/", (req, res) => {
   res.send("API Running Successfully");
 });
 
-// port
 const PORT = process.env.PORT || 5000;
 
-// start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
