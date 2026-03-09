@@ -10,13 +10,22 @@ connectDB();
 const app = express();
 
 // CORS configuration
-const frontendUrl = process.env.FRONTEND_URL; // set this in production (e.g. your Vercel URL)
+// Accept FRONTEND_URL (preferred) or CLIENT_URL (used in BACKEND/.env) as fallback
+const frontendUrl = process.env.FRONTEND_URL || process.env.CLIENT_URL;
 const defaultLocal = "http://localhost:5173";
 const allowedOrigins = [frontendUrl, defaultLocal].filter(Boolean);
 
 app.use(
   cors({
-    origin: allowedOrigins.length ? allowedOrigins : true,
+    origin: function (origin, callback) {
+      // allow requests with no origin like mobile apps or curl
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
