@@ -15,21 +15,32 @@ const frontendUrl = process.env.FRONTEND_URL || process.env.CLIENT_URL;
 const defaultLocal = "http://localhost:5173";
 const allowedOrigins = [frontendUrl, defaultLocal].filter(Boolean);
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // allow requests with no origin like mobile apps or curl
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true,
-  })
-);
+// Emergency toggle: if ALLOW_ALL_CORS=true, enable permissive CORS (use only for testing)
+if (process.env.ALLOW_ALL_CORS === "true") {
+  app.use(
+    cors({
+      origin: true,
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      credentials: true,
+    })
+  );
+} else {
+  app.use(
+    cors({
+      origin: function (origin, callback) {
+        // allow requests with no origin like mobile apps or curl
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      credentials: true,
+    })
+  );
+}
 
 // middleware
 app.use(express.json());
