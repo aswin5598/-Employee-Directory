@@ -10,14 +10,15 @@ connectDB();
 const app = express();
 
 // CORS configuration
+const frontendUrl = process.env.FRONTEND_URL; // set this in production (e.g. your Vercel URL)
+const defaultLocal = "http://localhost:5173";
+const allowedOrigins = [frontendUrl, defaultLocal].filter(Boolean);
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://employee-directory-ten-liard.vercel.app"
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
+    origin: allowedOrigins.length ? allowedOrigins : true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
   })
 );
 
